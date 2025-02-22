@@ -13,8 +13,9 @@ import java.util.Properties;
 public class TransactionProducer {
 
     private static final Logger log = LoggerFactory.getLogger(TransactionProducer.class);
-    private final KafkaProducer<String, Transaction> producer;
     private static final String TOPIC = "lesson1hw";
+
+    private final KafkaProducer<String, Transaction> producer;
 
     public TransactionProducer(Properties properties) {
         this.producer = new KafkaProducer<>(properties);
@@ -35,9 +36,11 @@ public class TransactionProducer {
                 }
             }
         });
+        producer.flush();
     }
 
     public void close() {
+        log.info("TransactionProducer закрыт");
         producer.close();
     }
 }
